@@ -24,7 +24,8 @@ class GameController extends Controller
     public function index()
     {
         //
-        return view('games.index');
+        $games = \Auth::user()->games()->get();
+        return view('games.index', compact('games'));
     }
 
     /**
@@ -35,7 +36,15 @@ class GameController extends Controller
     public function create()
     {
         //
-        return view('games.create');
+        $game = new \App\Game;
+        $game->user_id = \Auth::user()->id;
+        $default_data = [];
+        $default_data['map'] = 'Map Data';
+        $default_data['quest'] = 'Quest Data';
+        $default_data['inventory'] = 'Inventory Data';
+        $game->data = json_encode($default_data);
+        $game->save();
+        return redirect('/games');
     }
 
     /**
@@ -59,7 +68,9 @@ class GameController extends Controller
     public function show($id)
     {
         //
-        return view('games.show');
+        $game = \App\Game::find($id);
+        $user = \Auth::user();
+        return view('games.show', compact('game', 'user'));
     }
 
     /**
