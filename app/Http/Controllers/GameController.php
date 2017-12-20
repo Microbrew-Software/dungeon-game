@@ -39,9 +39,9 @@ class GameController extends Controller
         $game = new \App\Game;
         $game->user_id = \Auth::user()->id;
         $default_data = [];
-        $default_data['map'] = 'Map Data';
-        $default_data['quest'] = 'Quest Data';
-        $default_data['inventory'] = 'Inventory Data';
+        $default_data['map'] = $this->_generate_map();
+        $default_data['quest'] = $this->_generate_quest();
+        $default_data['inventory'] = $this->_generate_initial_inventory();
         $game->data = json_encode($default_data);
         $game->save();
         return redirect('/games');
@@ -109,4 +109,23 @@ class GameController extends Controller
         //
         return "Delete a game";
     }
+
+    private function _generate_map() {
+
+        return "Default map data";
+
+    }
+
+    private function _generate_quest() {
+
+        return "Default quest data";
+
+    }
+
+    private function _generate_initial_inventory() {
+
+        return "Default initial inventory";
+
+    }
+
 }
